@@ -2,7 +2,6 @@ import login
 import os
 
 class Users:
-    
     def __init__(self):
         self.__username    = ''
         self.__namaLengkap = ''
@@ -58,7 +57,7 @@ SILAHKAN INPUT NOMOR UNTUK MEMILIH PILIHAN\n
         pendapatan.lihat()
     elif pilihan == 5:
         print('Terima kasih')
-        print(user.username)
+        print(login.username)
         input('Tekan ENTER untuk keluar')
         exit()
     else:
@@ -66,5 +65,6 @@ SILAHKAN INPUT NOMOR UNTUK MEMILIH PILIHAN\n
         input('tekan ENTER untuk melanjutkan...')
         main()
 
+user = Login()
 if __name__ == '__main__':
     main()

@@ -1,0 +1,137 @@
+import pymysql
+import os
+import main
+from getpass import getpass
+from datetime import datetime
+
+conn = cursor = None
+#fungsi koneksi database
+def openDb():
+   global conn, cursor
+   conn =  pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+   cursor = conn.cursor()	
+
+class Login:
+    def __init__(self, username, password):
+        #database connection
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+        self.cursor = self.connection.cursor()
+        self.__password = password
+        self.__username = username
+        self.__namaLengkap = ''
+
+    @property
+    def username(self):
+        pass
+    @username.getter
+    def username(self):
+        return self.__username
+    @username.setter
+    def username(self, input):
+        self.__username = input
+        
+    @property
+    def namaLengkap(self):
+        pass
+    @namaLengkap.getter
+    def namaLengkap(self):
+        return self.__namaLengkap
+    @namaLengkap.setter
+    def namaLengkap(self, input):
+        self.__namaLengkap = input
+
+    def auth(self):
+
+        # queries for retrievint all rows
+        getUser = "SELECT * FROM `users` WHERE `username` = '" + self.__username + "' AND `password` = '" + self.__password + "';"
+
+        #executing the quires
+        self.cursor.execute(getUser)
+        rows = self.cursor.fetchall()
+
+        if len(rows) == 0:
+            print(self.__username, self.__password)
+            print('username atau password salah !')
+            input('\ntekan ENTER untuk lanjut')
+            main.main()
+        else:
+            self.__username    = rows[0][0]
+            self.__namaLengkap = rows[0][2]
+
+            #commiting the connection then closing it.
+            self.connection.commit()
+            self.connection.close()
+            os.system('cls')
+            main.menu()
+            # os.system('python adminPage.py')
+
+class Transaksi(Login):
+
+    def __init__(self):
+        #database connection
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+        self.cursor = self.connection.cursor()
+        self.__idTransaksi   = ''
+        self.__detail        = []
+        self.__addDataTransaksi = { 
+                                    "detail"          : [[ ] ],
+                                    "namaPelanggan"   : '',
+                                    "status"          : 'belum selesai',
+                                    "idPotongan"      : '',
+                                    "mulai"           : datetime.today().strftime('%Y-%m-%d')
+                                  }
+    
+    def addDetail(self, JenisCucian, berat, ke):
+        
+        self.__addDataTransaksi['detail'].append([])
+        self.__addDataTransaksi['detail'][ke].append(JenisCucian)
+        self.__addDataTransaksi['detail'][ke].append(berat)
+
+        # print(self.__addDataTransaksi['detail'])
+
+        return True
+    
+    def verifyVoucher(self, kode):
+        # queries for retrievint all rows
+        getVoucher = "SELECT * FROM `potonganharga` WHERE `idPotongan` = '" + kode + "';"
+
+        #executing the quires
+        self.cursor.execute(getVoucher)
+        rows = self.cursor.fetchall()
+
+        if len(rows) == 0:
+            return False
+        else:
+            self.connection.close()
+            return True
+
+    def insertTransaksi(self, namaPelanggan, kodevoucher='null'):
+
+        # if kodevoucher == 'null':
+        #     insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', " + kodevoucher + ", '" + self.__addDataTransaksi['mulai'] + "')"
+        # else:
+        #     insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', NULL, '" + self.__addDataTransaksi['mulai'] + "')"
+        # # print2
+        # #executing the quires
+        # self.cursor.execute(insertDetail)
+        # self.connection.commit()
+
+        getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 1;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        print(data)
+
+        for i in self.__addDataTransaksi['detail']:
+            # print(data[0][0])
+            print(i)
+        return True
+
+    def viewPaket():
+        
+        getData     = "SELECT * FROM paket ORDER BY idPaket DESC;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        print(data)
+        return data
