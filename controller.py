@@ -102,36 +102,80 @@ class Transaksi(Login):
         if len(rows) == 0:
             return False
         else:
-            self.connection.close()
             return True
+    
+    # Overloading (?)
+    def insertTransaksi(self, *argv):
+        if len(argv) == 1:
+            self.tanpavoucher(argv[0])
+        elif len(argv) == 2:
+            self.pakevoucher(argv[0], argv[1])
+    # kalau ga pake voucher
+    def tanpavoucher(self, namaPelanggan):
 
-    def insertTransaksi(self, namaPelanggan, kodevoucher='null'):
+        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', NULL, '" + self.__addDataTransaksi['mulai'] + "')"
 
-        # if kodevoucher == 'null':
-        #     insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', " + kodevoucher + ", '" + self.__addDataTransaksi['mulai'] + "')"
-        # else:
-        #     insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', NULL, '" + self.__addDataTransaksi['mulai'] + "')"
-        # # print2
-        # #executing the quires
-        # self.cursor.execute(insertDetail)
-        # self.connection.commit()
+        #executing the quires
+        self.cursor.execute(insertTransaksi)
+        self.connection.commit()
 
         getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 1;"
 
         self.cursor.execute(getData)
-        data = self.cursor.fetchall()
-        print(data)
+        data = list(self.cursor.fetchall() )
+
+        self.__addDataTransaksi['detail'].pop(len(self.__addDataTransaksi['detail']) - 1)
+
+        insertDetail = "INSERT INTO `detailPakaian` (`idTransaksi`, `idPaket`, `berat`) VALUES" 
+        value = ''
 
         for i in self.__addDataTransaksi['detail']:
-            # print(data[0][0])
-            print(i)
+            if kodevoucher == 'null':
+                # print(i[0],i[1])
+                value = value + "(" + str(data[0][0]) + ", " + str(i[0]) + ", " + str(i[1]) + "),"
+        insertDetail = insertDetail + value[:-1] + ";"
+        
+        # executing the quires
+        self.cursor.execute(insertDetail)
+        self.connection.commit()
+
+        return True
+    # kalau pake voucher
+    def pakevoucher(self, namaPelanggan, kodevoucher):
+        
+        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', " + kodevoucher + ", '" + self.__addDataTransaksi['mulai'] + "')"
+        
+        #executing the quires
+        self.cursor.execute(insertTransaksi)
+        self.connection.commit()
+
+        getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 1;"
+
+        self.cursor.execute(getData)
+        data = list(self.cursor.fetchall() )
+
+        self.__addDataTransaksi['detail'].pop(len(self.__addDataTransaksi['detail']) - 1)
+
+        insertDetail = "INSERT INTO `detailPakaian` (`idTransaksi`, `idPaket`, `berat`) VALUES" 
+        value = ''
+
+        for i in self.__addDataTransaksi['detail']:
+                
+            value = value + "(" + str(data[0][0]) + ", " + str(i[0]) + ", " + str(i[1]) + "),"
+
+        insertDetail = insertDetail + value[:-1] + ";"
+
+        # executing the quires
+        self.cursor.execute(insertDetail)
+        self.connection.commit()
+
         return True
 
-    def viewPaket():
+    def viewPaket(self):
         
-        getData     = "SELECT * FROM paket ORDER BY idPaket DESC;"
+        getData     = "SELECT * FROM paket ORDER BY idPaket ASC;"
 
         self.cursor.execute(getData)
         data = self.cursor.fetchall()
-        print(data)
-        return data
+        # print(data)
+        return list(data)

@@ -64,7 +64,7 @@ def tambahTransaksi():
 
     transaksi = ct.Transaksi()
 
-    os.system('clear')
+    os.system('cls')
     loop = True
     count = 0
     loopDetail = True
@@ -76,25 +76,29 @@ def tambahTransaksi():
             """)
             print("Tentukan jenis paket cuci : ")
 
-            banyakPaket = transaksi.viewPaket()
-            print(banyakPaket)
-            
-            idPaket     = []
+            banyakPaket     = list(transaksi.viewPaket() )
 
-            for i in range(banyakPaket):
-                print("1." . i[i][2])
-                idPaket.append(i[i][0])
-            
+            idPaket     = []
+            hitung       = 1
+
+            for i in banyakPaket:
+                print(hitung, end=". ")
+                print(i[1])
+                # print("1." . banyakPaket[i][1])
+                idPaket.append(i[0])
+                hitung+=1
+            print("99. Selanjutnya")
+
             JenisCucian = int(input('Masukkan jenis cucian = ') )
             
-            if JenisCucian != 1 and JenisCucian != 2 and JenisCucian != 3:
+            if JenisCucian not in idPaket and JenisCucian != 99:
 
                 print("Input salah ! masukkan input dengan benar !")
                 input("\nTekan ENTER untuk melanjutkan")
                 os.system('cls')
                 continue
 
-            elif JenisCucian == 1 or JenisCucian == 2:
+            elif JenisCucian in idPaket:
 
                 berat       = int(input('Masukkan berat = '))
                 transaksi.addDetail(JenisCucian, berat, count)
@@ -106,7 +110,7 @@ def tambahTransaksi():
                 continue
 
         else:
-            ansVoucher = int(input("apakah punya kode voucher?\n1. Ya\n2. Tidak "))
+            ansVoucher = int(input("apakah punya kode voucher?\n1. Ya\n2. Tidak \nJawaban anda = "))
 
             if ansVoucher > 2 and ansVoucher < 1:
 
@@ -123,13 +127,16 @@ def tambahTransaksi():
                     print("kode voucher berhasil digunakan")
                     input("Tekan ENTER untuk melanjutkan")
                     transaksi.insertTransaksi(namaPelanggan, kodevoucher)
+                    loopDetail = False
+                    loop       = False
+
             elif ansVoucher == 2:
                     transaksi.insertTransaksi(namaPelanggan)
                     loopDetail = False
                     loop       = False
-                    print()
-                    print("==========Transaksi selesai==========")
-                    print("\ntekan ENTER untuk melanjutkan")
+    print()
+    print("==========Transaksi selesai==========")
+    print("\ntekan ENTER untuk melanjutkan")
 
 if __name__ == '__main__':
     main()
