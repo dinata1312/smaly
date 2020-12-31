@@ -130,9 +130,9 @@ class Transaksi(Login):
         value = ''
 
         for i in self.__addDataTransaksi['detail']:
-            if kodevoucher == 'null':
+            
                 # print(i[0],i[1])
-                value = value + "(" + str(data[0][0]) + ", " + str(i[0]) + ", " + str(i[1]) + "),"
+            value = value + "(" + str(data[0][0]) + ", " + str(i[0]) + ", " + str(i[1]) + "),"
         insertDetail = insertDetail + value[:-1] + ";"
         
         # executing the quires
@@ -198,7 +198,7 @@ class Transaksi(Login):
         data = self.cursor.fetchall()
 
         return list(data)
-    
+
     def findPaket(self, idPaket):
 
         getData     = "SELECT namaPaket FROM paket WHERE `idPaket` = " + str(idPaket) + "  LIMIT 1;"
@@ -208,4 +208,35 @@ class Transaksi(Login):
         data = self.cursor.fetchall()
         
         return data[0][0]
+    
+class paket(login):
+    def __init__(self):
+        #database connection
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+        self.cursor = self.connection.cursor()
+        self.__idPaket  = ''
+        self.__addDataPaket = { 
+                                    "namaPaket " : '',
+                                    "harga"      : '',
+                                    "jenis"      : '',
+                                    "durasi"     : ''
+                                  }
+
+    def viewPaket(self):
+        
+        getData     = "SELECT * FROM paket ORDER BY idPaket ASC;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        return list(data)
+
+    def addPaket(self, namaPaket, harga, jenis, durasi):
+        
+        self.__addDataPaket.append([])
+        self.__addDataPaket.append(namaPaket)
+        self.__addDataPaket.append(harga)
+        self.__addDataPaket.append(jenis)
+        self.__addDataPaket.append(durasi)
+
+        return True
     

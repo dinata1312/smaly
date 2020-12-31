@@ -42,9 +42,7 @@ def menu():
             lihatTransaksi()
 
     elif pilihan == 3:
-
-        paket     = Paket()
-        paket.lihatMenu()
+        menupaket()
 
     elif pilihan == 4:
         
@@ -163,6 +161,54 @@ def lihatTransaksi():
     
         input("tekan ENTER untuk kembali ke menu")
         menu()
+
+def menupaket():
+
+    paket = ct.paket()
+
+    dataPaket = list(paket.viewPaket() )
+
+    for i in dataPaket:
+        print(str(i[0]) + "  Nama paket = " + str(i[1]) + "  Durasi = " + str(i[4]) + "hari  Harga = " + str(i[2]))
+    
+    print("Kamu mau apa?")
+    print("1. Tambah paket")
+    print("2. Hapus paket")
+    print("3. Kembali")
+    answer = input("Jawaban = ")
+
+    if answer == "1":
+        tambahPaket()
+    elif answer == "2":
+        hapusPaket()
+    elif answer == "3":
+        menu()
+    else:
+        print('Input yang dimasukkan salah! \ninput hanya boleh diisi angka 1 dan 2!')
+        input('tekan ENTER untuk melanjutkan...')
+        menupaket()
+
+def tambahpaket():
+
+    paket = ct.paket()
+
+    os.system('cls')
+    print("""
+    ======================= S M A L Y =======================
+    TAMBAH PAKET \n
+    """)
+    print("Buat Data Baru : ")
+
+    namaPaket = input('Masukkan nama Paket = ') 
+    harga = int(input('Masukkan harga = '))
+    jenis = input('Masukkan jenis = ')
+    durasi = int(input('Masukkan durasi pengerjaan = '))
+    paket.addPaket(namaPaket, harga, jenis, durasi)
+        
+    print()
+    print("==========Paket berhasil ditambahkan==========")
+    print("\ntekan ENTER untuk melihat paket")
+    menupaket()
 
 if __name__ == '__main__':
     main()
