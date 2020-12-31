@@ -137,6 +137,32 @@ def tambahTransaksi():
     print()
     print("==========Transaksi selesai==========")
     print("\ntekan ENTER untuk melanjutkan")
+    menu()
+
+def lihatTransaksi():
+
+    transaksi = ct.Transaksi()
+
+    dataTransaksi = list(transaksi.viewTransaksi() )
+
+    for i in dataTransaksi:
+        print(i)
+    print("Masukkan id untuk melihat pesanan, untuk kembali ke menu ketik 99")
+    answer = input("Jawaban = ")
+
+    if answer == 99:
+        menu()
+
+    else:
+        detailnya = transaksi.detailTransaksi(answer)
+        print()
+        for i in detailnya:
+            print("Paket = " + str(transaksi.findPaket(i[2]) ) )
+            print("Berat = " + str(i[3]) + " kg")
+            print("---")
+    
+        input("tekan ENTER untuk kembali ke menu")
+        menu()
 
 if __name__ == '__main__':
     main()

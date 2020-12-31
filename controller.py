@@ -179,3 +179,33 @@ class Transaksi(Login):
         data = self.cursor.fetchall()
         # print(data)
         return list(data)
+
+    def viewTransaksi(self):
+        
+        getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 10;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        # print(data)
+        return list(data)
+
+    def detailTransaksi(self, idTransaksi):
+
+        getDetail   = "SELECT * FROM detailpakaian WHERE `idTransaksi` = " + idTransaksi + ";"
+
+        self.cursor.execute(getDetail)
+
+        data = self.cursor.fetchall()
+
+        return list(data)
+    
+    def findPaket(self, idPaket):
+
+        getData     = "SELECT namaPaket FROM paket WHERE `idPaket` = " + str(idPaket) + "  LIMIT 1;"
+
+        self.cursor.execute(getData)
+
+        data = self.cursor.fetchall()
+        
+        return data[0][0]
+    
