@@ -267,7 +267,11 @@ class paket(Login):
     
     def hapuspaket(self):
         
-        getData = "DELETE FROM paket WHERE idPaket = " + idPaket
-        self.cursor.execute(getData)
-        data = self.cursor.fetchall()
+        delPaket = "DELETE FROM paket WHERE idPaket = " + idPaket
+
+        # executing the quires
+        self.cursor.execute(delPaket)
+        self.connection.commit()    
+
+        return True
 
