@@ -25,9 +25,11 @@ def main():
         input('tekan ENTER untuk melanjutkan...')
         main()
         
-
 def cekstatus():
+
+    os.system('cls')
     transaksi = ct.Transaksi()
+    print()
     print("Masukkan id untuk melihat status pakaian, untuk kembali ke menu ketik 99")
     answer = input("Jawaban = ")
 
@@ -43,6 +45,8 @@ def cekstatus():
         main()
 
 def login():
+    
+    os.system('cls')
     print("""SILAHKAN LOGIN TERLEBIH DAHULU\n
     """)
     username = input('Masukkan username = ')
@@ -94,9 +98,10 @@ def menu():
 
 def tambahTransaksi():
 
+    os.system('cls')
+
     transaksi = ct.Transaksi()
 
-    os.system('cls')
     loop = True
     count = 0
     loopDetail = True
@@ -173,37 +178,65 @@ def tambahTransaksi():
 
 def lihatTransaksi():
 
+    os.system('cls')
+
     transaksi = ct.Transaksi()
 
     dataTransaksi = list(transaksi.viewTransaksi() )
 
     for i in dataTransaksi:
         print(i)
+    
     print("Masukkan id untuk melihat pesanan, untuk kembali ke menu ketik 99")
     answer = input("Jawaban = ")
 
     if answer == 99:
+
         menu()
 
     else:
-        detailnya = transaksi.detailTransaksi(answer)
-        print()
+
+        os.system('cls')
+
+        idTransaksi = answer
+        detailnya = list(transaksi.detailTransaksi(idTransaksi))
+
+        print("||===============================||")
+        print("|| Paket\t|| Berat\t ||")
+        print("||===============================||")
+
         for i in detailnya:
-            print("Paket = " + str(transaksi.findPaket(i[2]) ) )
-            print("Berat = " + str(i[3]) + " kg")
-            print("---")
-    
-        input("tekan ENTER untuk kembali ke menu")
+            print("|| " + str(transaksi.findPaket(i[2]) ) + "\t|| " + str(i[3]) + " kg\t\t ||")
+            print("||------------------------------ ||")
+
+        print()
+        print("Opsi: ")
+        print("1. Selesai\n2. Kembali ke menu")
+        print()
+        answer = int(input("Jawaban anda = ") )
+
+        transaksi.updateTransaksi(idTransaksi) 
+        print("Data berhasil diperbarui !")
+        input("Tekan ENTER untuk kembali ke menu")
         menu()
 
 def menupaket():
+    
+    os.system('cls')
 
     paket = ct.paket()
 
     dataPaket = list(paket.viewPaket() )
 
+    print("||=======================================================||")
+    print("||ID ||\tNama Paket\t|| Durasi\t|| Harga\t ||")
+    print("||=======================================================||")
+
     for i in dataPaket:
-        print(str(i[0]) + "  Nama paket = " + str(i[1]) + "  Durasi = " + str(i[4]) + "hari  Harga = " + str(i[2]))
+        print("||" + str(i[0]) + "  || " + str(i[1]) + "\t|| " + str(i[4]) + " hari\t|| Rp" + str(i[2]) + "\t ||")
+
+    print("||=======================================================||")
+
     
     print("Kamu mau apa?")
     print("1. Tambah paket")
@@ -212,7 +245,7 @@ def menupaket():
     answer = input("Jawaban = ")
 
     if answer == "1":
-        tambahPaket()
+        addPaket()
     elif answer == "2":
         hapusPaket()
     elif answer == "3":
@@ -262,6 +295,3 @@ def hapuspaket():
 
 if __name__ == '__main__':
     main()
-
-
-    

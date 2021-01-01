@@ -4,7 +4,7 @@ import main
 from getpass import getpass
 from datetime import datetime
 
-conn = cursor = None
+# conn = cursor = None
 #fungsi koneksi database
 def openDb():
    global conn, cursor
@@ -177,7 +177,7 @@ class Transaksi(Login):
 
         self.cursor.execute(getData)
         data = self.cursor.fetchall()
-        # print(data)
+
         return list(data)
 
     def viewTransaksi(self):
@@ -186,7 +186,7 @@ class Transaksi(Login):
 
         self.cursor.execute(getData)
         data = self.cursor.fetchall()
-        # print(data)
+        
         return list(data)
 
     def viewStatus(self, answer):
@@ -218,6 +218,29 @@ class Transaksi(Login):
         
         return data[0][0]
     
+    def updateTransaksi(self, idTransaksi):
+
+        
+        getData     = "SELECT idTransaksi FROM transaksi WHERE `idTransaksi` = " + str(idTransaksi) + "  LIMIT 1;"
+
+        self.cursor.execute(getData)
+
+        data = self.cursor.fetchall()
+
+        if len(data) == 0:
+            input("SALAH")
+            return False
+        else:
+            # print(idTransaksi)
+            # exit()
+            updateData  = "UPDATE `transaksi` SET `status` = 'selesai' WHERE `idTransaksi` = " + str(idTransaksi)
+
+            self.cursor.execute(updateData)
+            self.connection.commit()
+
+            return True
+
+
 class paket(Login):
     def __init__(self):
         #database connection
@@ -254,3 +277,4 @@ class paket(Login):
         getData = "DELETE FROM paket WHERE idPaket = " + idPaket
         self.cursor.execute(getData)
         data = self.cursor.fetchall()
+
