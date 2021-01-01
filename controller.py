@@ -130,12 +130,8 @@ class Transaksi(Login):
         value = ''
 
         for i in self.__addDataTransaksi['detail']:
-<<<<<<< Updated upstream
             
                 # print(i[0],i[1])
-=======
-            # print(i[0],i[1])
->>>>>>> Stashed changes
             value = value + "(" + str(data[0][0]) + ", " + str(i[0]) + ", " + str(i[1]) + "),"
         insertDetail = insertDetail + value[:-1] + ";"
         
@@ -213,7 +209,7 @@ class Transaksi(Login):
         
         return data[0][0]
     
-class paket(login):
+class Paket(Login):
     def __init__(self):
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
