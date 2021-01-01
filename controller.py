@@ -240,19 +240,12 @@ class Transaksi(Login):
 
             return True
 
-
 class paket(Login):
     def __init__(self):
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
         self.cursor = self.connection.cursor()
         self.__idPaket  = ''
-        self.__addDataPaket = { 
-                                    "namaPaket " : '',
-                                    "harga"      : '',
-                                    "jenis"      : '',
-                                    "durasi"     : ''
-                                  }
 
     def viewPaket(self):
         
@@ -264,11 +257,11 @@ class paket(Login):
 
     def addPaket(self, namaPaket, harga, jenis, durasi):
         
-        self.__addDataPaket.append([])
-        self.__addDataPaket.append(namaPaket)
-        self.__addDataPaket.append(harga)
-        self.__addDataPaket.append(jenis)
-        self.__addDataPaket.append(durasi)
+        insertPaket = "INSERT INTO `paket` (`idPaket`, `namaPaket`, `harga`, `jenis`, `durasi`) VALUES (NULL, '" + str(namaPaket) + "', '" + str(harga) + "', '" + str(jenis) + "', '" + str(durasi) + "') ;"
+
+        # executing the quires
+        self.cursor.execute(insertPaket)
+        self.connection.commit()    
 
         return True
     

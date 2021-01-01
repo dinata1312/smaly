@@ -245,7 +245,7 @@ def menupaket():
     answer = input("Jawaban = ")
 
     if answer == "1":
-        addPaket()
+        tambahpaket()
     elif answer == "2":
         hapusPaket()
     elif answer == "3":
