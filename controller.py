@@ -189,6 +189,15 @@ class Transaksi(Login):
         # print(data)
         return list(data)
 
+    def viewStatus(self, answer):
+        
+        getData     = "SELECT * FROM transaksi WHERE `idTransaksi` = " + answer + ";"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        # print(data)
+        return list(data)
+
     def detailTransaksi(self, idTransaksi):
 
         getDetail   = "SELECT * FROM detailpakaian WHERE `idTransaksi` = " + idTransaksi + ";"
@@ -209,7 +218,7 @@ class Transaksi(Login):
         
         return data[0][0]
     
-class Paket(Login):
+class paket(Login):
     def __init__(self):
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
@@ -240,3 +249,8 @@ class Paket(Login):
 
         return True
     
+    def hapuspaket(self):
+        
+        getData = "DELETE FROM paket WHERE idPaket = " + idPaket
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
