@@ -6,13 +6,13 @@ import controller as ct
 def main():
 
     os.system('cls')
-    print("""
-    ======================= S M A L Y =======================
-    SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n
-    Siapakah anda? \n
-    1. Pelanggan
-    2. Pegawai
-    99. keluar""")
+    print("======================= S M A L Y =======================")
+    print("SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n")
+    print("Siapakah anda? \n")
+    print("1. Pelanggan")
+    print("2. Pegawai")
+    print("99. keluar\n")
+    
     answer = int(input("Isikan jawaban anda ="))
     if answer == 1 : 
         cekstatus()
@@ -77,8 +77,8 @@ def cekstatus():
 def login():
     
     os.system('cls')
-    print("""SILAHKAN LOGIN TERLEBIH DAHULU\n
-    """)
+    print("SILAHKAN LOGIN TERLEBIH DAHULU\n")
+    
     username = input('Masukkan username = ')
     # password = input('Masukkan password = ')
     password = getpass(prompt = 'Masukkan password = ', stream="*")
@@ -90,16 +90,15 @@ def login():
 def menu():
     
     os.system('cls')
-    print("""
-    ======================= S M A L Y =======================
-    SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n
-    SILAHKAN INPUT NOMOR UNTUK MEMILIH PILIHAN\n
-    1. Tambah transaksi baru
-    2. Lihat Transaksi
-    3. Menu Paket
-    4. Pendapatan kotor 
-    5. Keluar
-    """)
+    print("======================= S M A L Y =======================")
+    print("SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n")
+    print("SILAHKAN INPUT NOMOR UNTUK MEMILIH PILIHAN\n")
+    print("1. Tambah transaksi baru")
+    print("2. Lihat Transaksi")
+    print("3. Menu Paket")
+    print("4. Pendapatan kotor ")
+    print("5. Keluar")
+
     pilihan = int(input('Masukkan pilihan anda = '))
 
     if pilihan == 1 or pilihan == 2:
