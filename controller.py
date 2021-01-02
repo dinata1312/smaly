@@ -67,7 +67,6 @@ class Transaksi(Login):
         self.__idTransaksi   = ''
         self.__detail        = []
         self.__addDataTransaksi = { 
-                                    "detail"          : [[ ] ],
                                     "status"          : 'belum selesai',
                                     "mulai"           : datetime.today().strftime('%Y-%m-%d')
                                   }
