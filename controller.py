@@ -74,6 +74,7 @@ class Transaksi(Login):
                                     "mulai"           : datetime.today().strftime('%Y-%m-%d')
                                   }
     
+    # Menambahkan detail transaksi
     def addDetail(self, JenisCucian, berat, ke):
         
         self.__addDataTransaksi['detail'].append([])
@@ -83,7 +84,8 @@ class Transaksi(Login):
         # print(self.__addDataTransaksi['detail'])
 
         return True
- 
+    
+    # Menambahkan Transaksi
     def insert(self, namaPelanggan):
         
         insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `idPotongan`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', " + kodevoucher + ", '" + self.__addDataTransaksi['mulai'] + "')"
@@ -136,6 +138,16 @@ class Transaksi(Login):
             self.connection.commit()
 
             return True
+
+    # View Transaksi
+    def viewTransaksi(self):
+        
+        getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 20;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        
+        return list(data)
 
     # kalau ga pake voucher
     # def tanpavoucher(self, namaPelanggan):
@@ -209,16 +221,6 @@ class Transaksi(Login):
 
         return list(data)
 
-    # View Transaksi
-    def viewTransaksi(self):
-        
-        getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 10;"
-
-        self.cursor.execute(getData)
-        data = self.cursor.fetchall()
-        
-        return list(data)
-
     # View Status
     def viewStatus(self, answer):
         
@@ -232,7 +234,7 @@ class Transaksi(Login):
     # Detail Transaksi
     def detailTransaksi(self, idTransaksi):
 
-        getDetail   = "SELECT * FROM detailpakaian WHERE `idTransaksi` = " + idTransaksi + ";"
+        getDetail   = "SELECT * FROM detailpakaian WHERE `idTransaksi` = " + str(idTransaksi) + ";"
 
         self.cursor.execute(getDetail)
 
@@ -243,7 +245,7 @@ class Transaksi(Login):
     # Mencari Paket
     def findPaket(self, idPaket):
 
-        getData     = "SELECT namaPaket FROM paket WHERE `idPaket` = " + str(idPaket) + "  LIMIT 1;"
+        getData     = "SELECT * FROM paket WHERE `idPaket` = " + str(idPaket) + "  LIMIT 1;"
 
         self.cursor.execute(getData)
 
@@ -280,7 +282,7 @@ class paket(Transaksi):
         return True
     
     # Delete Paket
-    def delete(self):
+    def delete(self, idPaket):
         
         delPaket = "DELETE FROM paket WHERE idPaket = " + idPaket
 

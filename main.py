@@ -39,9 +39,37 @@ def cekstatus():
 
     else:
         status = transaksi.viewStatus(answer)
+        
         for i in status:
-            print("Status = " + str(i[2]) )
-            print("---")
+            print("||==============================================||")
+            print("|| ID Transaksi\t\t= " + str(i[0]) + "\t\t\t||")
+            print("|| Nama Pelanggan\t= " + str(i[1]) + "\t\t\t||")
+            print("|| Status\t\t= " + str(i[2]) + "\t\t||")
+            print("|| Tanggal Pemesanan\t= " + str(i[3]) + "\t\t\t||" )
+            print("||----------------------------------------------||")
+
+            
+            idTransaksi = answer
+            detailnya = list(transaksi.detailTransaksi(idTransaksi))
+            total = 0
+
+            print("||==============================================||")
+            print("|| Paket\t|| Berat\t || Harga \t||")
+            print("||==============================================||")
+
+            for j in detailnya:
+                
+                namaPaket = transaksi.findPaket(j[2])
+                
+                print("|| " + str(namaPaket[0][1]) + "\t|| " + str(j[3]) + " kg\t\t || " + str(namaPaket[0][2]) + "\t||")
+                print("||----------------------------------------------||")
+                total = total + namaPaket[0][2]
+            
+            print("||TOTAL HARGA \t\t\t   Rp" + str(total) + "\t||")
+            print("||==============================================||")
+
+            print()
+            
         input("tekan ENTER untuk keluar")
         main()
 
@@ -101,6 +129,7 @@ def tambahTransaksi():
 
     os.system('cls')
 
+    paket     = ct.paket()
     transaksi = ct.Transaksi()
 
     loop = True
@@ -108,10 +137,24 @@ def tambahTransaksi():
     loopDetail = True
     while loop == True:
         if loopDetail == True:
-            print("""
-            ======================= S M A L Y =======================
-            TAMBAH TRANSAKSI \n
-            """)
+
+            print()
+            print("======================= S M A L Y =======================")
+            print("TAMBAH TRANSAKSI")
+            print()
+            paket = ct.paket()
+
+            dataPaket = list(paket.viewPaket() )
+
+            print("||=======================================================||")
+            print("||ID ||\tNama Paket\t|| Durasi\t|| Harga\t ||")
+            print("||=======================================================||")
+
+            for i in dataPaket:
+                print("||" + str(i[0]) + "  || " + str(i[1]) + "\t|| " + str(i[4]) + " hari\t|| Rp" + str(i[2]) + "\t ||")
+
+            print("||=======================================================||")
+
             print("Tentukan jenis paket cuci : ")
 
             banyakPaket     = list(transaksi.viewPaket() )
@@ -143,15 +186,13 @@ def tambahTransaksi():
                 count = count + 1
 
             else:
-                loopDetail = False
-                namaPelanggan = input("Masukkan nama pelanggan = ")
-                continue
 
-        else:
-            
-            transaksi.insert((namaPelanggan)
-            loopDetail = False
-            loop       = False
+                namaPelanggan = input("Masukkan nama pelanggan = ")
+                
+                transaksi.insert(namaPelanggan)
+                loopDetail = False
+                loop       = False
+
     print()
     print("==========Transaksi selesai==========")
     print("\ntekan ENTER untuk melanjutkan")
@@ -165,13 +206,32 @@ def lihatTransaksi():
 
     dataTransaksi = list(transaksi.viewTransaksi() )
 
-    for i in dataTransaksi:
-        print(i)
-    
-    print("Masukkan id untuk melihat pesanan, untuk kembali ke menu ketik 99")
-    answer = input("Jawaban = ")
+    print("||======================================================================================||")
+    print("|| ID\t|| Nama Pelanggan\t || Status\t  || Tanggal Pesan \t|| Total \t||")
+    print("||======================================================================================||")
 
-    if answer == 99:
+    for i in dataTransaksi:
+
+        dataDetail = transaksi.detailTransaksi(i[0])
+        total = 0
+
+        for j in dataDetail:
+            
+            harga = transaksi.findPaket(j[2])
+            
+            total = total + harga[0][2]
+
+        if i[2] == 'selesai':
+            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + "\t  || " + str(i[4]) + "\t\t|| Rp" + str(total) + "\t||")
+        else:
+            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + " || " + str(i[4]) + "\t\t|| Rp"  + str(total) + "\t||")
+    
+    print("||======================================================================================||")
+    print()
+    print("Masukkan id untuk melihat pesanan, untuk kembali ke menu ketik 0")
+    answer = int(input("Jawaban = ") )
+
+    if answer == 0:
 
         menu()
 
@@ -183,7 +243,7 @@ def lihatTransaksi():
         detailnya = list(transaksi.detailTransaksi(idTransaksi))
 
         print("||===============================||")
-        print("|| Paket\t|| Berat\t ||")
+        print("|| Paket\t|| Berat\t || Harga \t||")
         print("||===============================||")
 
         for i in detailnya:
@@ -206,7 +266,6 @@ def menupaket():
     os.system('cls')
 
     paket = ct.paket()
-
     dataPaket = list(paket.viewPaket() )
 
     print("||=======================================================||")
@@ -228,7 +287,7 @@ def menupaket():
     if answer == "1":
         tambahpaket()
     elif answer == "2":
-        hapusPaket()
+        hapuspaket()
     elif answer == "3":
         menu()
     else:
@@ -259,13 +318,21 @@ def tambahpaket():
     menupaket()
 
 def hapuspaket():
-    paket = ct.paket()
 
     os.system('cls')
-    print("""
-    ======================= S M A L Y =======================
-    TAMBAH PAKET \n
-    """)
+
+    paket = ct.paket()
+    dataPaket = list(paket.viewPaket() )
+
+    print("||=======================================================||")
+    print("||ID ||\tNama Paket\t|| Durasi\t|| Harga\t ||")
+    print("||=======================================================||")
+
+    for i in dataPaket:
+        print("||" + str(i[0]) + "  || " + str(i[1]) + "\t|| " + str(i[4]) + " hari\t|| Rp" + str(i[2]) + "\t ||")
+
+    print("||=======================================================||")
+
     idPaket = input("Masukkan id data paket yang ingin anda hapus = ")
     paket.delete(idPaket)
 
