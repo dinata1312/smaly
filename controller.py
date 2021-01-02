@@ -88,7 +88,7 @@ class Transaksi(Login):
     # Menambahkan Transaksi
     def insert(self, namaPelanggan):
         
-        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', " + ", '" + self.__addDataTransaksi['mulai'] + "')"
+        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai'," + self.__addDataTransaksi['mulai'] + "')"
         
         #executing the quires
         self.cursor.execute(insertTransaksi)
