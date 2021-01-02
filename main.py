@@ -40,8 +40,11 @@ def cekstatus():
     else:
         status = transaksi.viewStatus(answer)
         for i in status:
+            print("------------------------")
+            print("ID Transaksi =" + str(i[0]) )
+            print("Nama pelanggan = " + str(i[1]) )
             print("Status = " + str(i[2]) )
-            print("---")
+            print("------------------------")
         input("tekan ENTER untuk keluar")
         main()
 
@@ -84,9 +87,7 @@ def menu():
         menupaket()
 
     elif pilihan == 4:
-        
-        pendapatan= Pendapatan()
-        pendapatan.lihat()
+        pendapatan()
 
     elif pilihan == 5:
         print('Terima kasih')
@@ -214,7 +215,7 @@ def menupaket():
     print("||=======================================================||")
 
     for i in dataPaket:
-        print("||" + str(i[0]) + "  || " + str(i[1]) + "\t|| " + str(i[4]) + " hari\t|| Rp" + str(i[2]) + "\t ||")
+        print("||" + str(i[0]) +  " || \t" + str(i[1]) + "\t|| " + str(i[4]) + " hari\t|| Rp" + str(i[2]) + "\t ||")
 
     print("||=======================================================||")
 
@@ -228,7 +229,7 @@ def menupaket():
     if answer == "1":
         tambahpaket()
     elif answer == "2":
-        hapusPaket()
+        hapuspaket()
     elif answer == "3":
         menu()
     else:

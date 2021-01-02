@@ -98,7 +98,7 @@ def menu():
         paket.lihatMenu()
     elif pilihan == 4:
         os.system('python pendapatan.py')
-        pendapatan= Pendapatan()
+        pendapatan= pendapatan()
         pendapatan.lihat()
     elif pilihan == 5:
         print('Terima kasih')

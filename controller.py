@@ -279,8 +279,7 @@ class paket(Transaksi):
 
         return True
     
-    # Delete Paket
-    def delete(self):
+    def hapuspaket(self, idPaket):
         
         delPaket = "DELETE FROM paket WHERE idPaket = " + idPaket
 
