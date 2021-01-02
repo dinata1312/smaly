@@ -117,8 +117,7 @@ class Transaksi(Login):
  
     # Memperbarui Paket
     def update(self, idTransaksi):
-
-        
+   
         getData     = "SELECT idTransaksi FROM transaksi WHERE `idTransaksi` = " + str(idTransaksi) + "  LIMIT 1;"
 
         self.cursor.execute(getData)
@@ -144,6 +143,38 @@ class Transaksi(Login):
         getData     = "SELECT * FROM transaksi ORDER BY idTransaksi DESC LIMIT 20;"
 
         self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        
+        return list(data)
+
+    # View Paket
+    def viewPaket(self):
+        
+        getData     = "SELECT * FROM paket ORDER BY idPaket ASC;"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+
+        return list(data)
+
+    # Detail Transaksi
+    def detailTransaksi(self, idTransaksi):
+
+        getDetail   = "SELECT * FROM detailpakaian WHERE `idTransaksi` = " + str(idTransaksi) + ";"
+
+        self.cursor.execute(getDetail)
+
+        data = self.cursor.fetchall()
+
+        return list(data)
+
+    # Mencari Paket
+    def findPaket(self, idPaket):
+
+        getData     = "SELECT * FROM paket WHERE `idPaket` = " + str(idPaket) + "  LIMIT 1;"
+
+        self.cursor.execute(getData)
+
         data = self.cursor.fetchall()
         
         return list(data)
@@ -285,7 +316,17 @@ class cekStatus:
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
         self.cursor = self.connection.cursor()
+        self.__idTransaksi  = ''
     
+    def viewIDTransaksi(self):
+        
+        getData     = "SELECT idTransaksi FROM transaksi"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        
+        return list(data)
+        
     # View Status
     def viewStatus(self, answer):
         
@@ -295,3 +336,21 @@ class cekStatus:
         data = self.cursor.fetchall()
         # print(data)
         return list(data)
+
+class Pendapatan(Transaksi):
+
+    def __init__(self):
+        #database connection
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+        self.cursor = self.connection.cursor()
+    
+    def byBulan(self, bulan, tahun):
+
+        query = "SELECT * FROM transaksi WHERE `Mulai` LIKE '" + str(tahun) + "-" + str(bulan) + "%' ;"
+        # print(query)
+        # exit()
+        self.cursor.execute(query)
+        data = self.cursor.fetchall()
+        
+        return data
+

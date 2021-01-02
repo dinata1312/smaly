@@ -198,7 +198,7 @@ def tambahTransaksi():
 
     print()
     print("==========Transaksi selesai==========")
-    print("\ntekan ENTER untuk lihat transaksi")
+    input("\ntekan ENTER untuk lihat transaksi")
     lihatTransaksi()
 
 def lihatTransaksi():
@@ -225,9 +225,9 @@ def lihatTransaksi():
             total = total + harga[0][2]
 
         if i[2] == 'selesai':
-            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + "\t  || " + str(i[4]) + "\t\t|| Rp" + str(total) + "\t||")
+            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + "\t  || " + str(i[3]) + "\t\t|| Rp" + str(total) + "\t||")
         else:
-            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + " || " + str(i[4]) + "\t\t|| Rp"  + str(total) + "\t||")
+            print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + " || " + str(i[3]) + "\t\t|| Rp"  + str(total) + "\t||")
     
     print("||======================================================================================||")
     print()
@@ -343,6 +343,47 @@ def hapuspaket():
     print("=====Paket berhasil dihapus=====")
     print("\ntekan ENTER untuk melihat paket")
     menupaket()
+
+def pendapatan():
+    
+    pendapatan = ct.Pendapatan()
+    transaksi  = ct.Transaksi()
+
+    bulan      = int(input("Masukkan bulan (1-12) = ") )
+    tahun      = int(input("Masukkan tahun = ") )
+
+    if int(bulan) > 0 and int(bulan) < 13 and int(tahun) > 2000:
+
+        dataPendapatan  = pendapatan.byBulan(bulan, tahun)
+        totalTransaksi  = 0
+        totalPendapatan = 0
+
+
+        for i in dataPendapatan:
+            
+            totalTransaksi = totalTransaksi + 1
+
+            
+            detailTransaksi = transaksi.detailTransaksi(i[0])
+
+            for j in detailTransaksi:
+                
+                harga = transaksi.findPaket(j[2])
+                totalPendapatan = totalPendapatan + harga[0][2]
+        
+        print("||==============================================||")
+        print("|| Tahun\t\t= " + str(tahun) + "\t\t\t||")
+        print("|| Bulan\t\t= " + str(bulan) + "\t\t\t||")
+        print("|| Jumlah Transaksi\t= " + str(totalTransaksi) + "\t\t\t||")
+        print("|| Total pendapatan\t= Rp" + str(totalPendapatan) + "\t\t||" )
+        print("||----------------------------------------------||")
+        
+    else:
+        print("Input yang dimasukkan salah !")
+        print("Input harus angka mulai dari 1 - 12 untuk menunjukkan bulan !")
+
+    input("tekan ENTER untuk kembali")
+    menu()
 
 if __name__ == '__main__':
     main()
