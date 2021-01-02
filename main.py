@@ -30,10 +30,11 @@ def cekstatus():
     os.system('cls')
     transaksi = ct.Transaksi()
     print()
-    print("Masukkan id untuk melihat status pakaian, untuk kembali ke menu ketik 99")
+    print("Masukkan id pesanan untuk melihat status pakaian, untuk kembali ke menu ketik 0")
+    print()
     answer = input("Jawaban = ")
 
-    if answer == 99:
+    if answer == 0:
         main()
 
     else:
@@ -147,30 +148,10 @@ def tambahTransaksi():
                 continue
 
         else:
-            ansVoucher = int(input("apakah punya kode voucher?\n1. Ya\n2. Tidak \nJawaban anda = "))
-
-            if ansVoucher > 2 and ansVoucher < 1:
-
-                print("Input yang dimasukkan salah !")
-                input("tekan ENTER untuk melanjutkan")
-
-            elif ansVoucher == 1:
-
-                kodevoucher = input("Masukkan kode voucher!")
-
-                if transaksi.verifyVoucher(kodevoucher) == False :
-                    print("kode voucher gagal digunakan !")
-                else:
-                    print("kode voucher berhasil digunakan")
-                    input("Tekan ENTER untuk melanjutkan")
-                    transaksi.insertTransaksi(namaPelanggan, kodevoucher)
-                    loopDetail = False
-                    loop       = False
-
-            elif ansVoucher == 2:
-                    transaksi.insertTransaksi(namaPelanggan)
-                    loopDetail = False
-                    loop       = False
+            
+            transaksi.insert((namaPelanggan)
+            loopDetail = False
+            loop       = False
     print()
     print("==========Transaksi selesai==========")
     print("\ntekan ENTER untuk melanjutkan")
@@ -215,7 +196,7 @@ def lihatTransaksi():
         print()
         answer = int(input("Jawaban anda = ") )
 
-        transaksi.updateTransaksi(idTransaksi) 
+        transaksi.update(idTransaksi) 
         print("Data berhasil diperbarui !")
         input("Tekan ENTER untuk kembali ke menu")
         menu()
@@ -270,7 +251,7 @@ def tambahpaket():
     harga = int(input('Masukkan harga = '))
     jenis = input('Masukkan jenis = ')
     durasi = int(input('Masukkan durasi pengerjaan = '))
-    paket.addPaket(namaPaket, harga, jenis, durasi)
+    paket.add(namaPaket, harga, jenis, durasi)
         
     print()
     print("==========Paket berhasil ditambahkan==========")
@@ -286,7 +267,7 @@ def hapuspaket():
     TAMBAH PAKET \n
     """)
     idPaket = input("Masukkan id data paket yang ingin anda hapus = ")
-    paket.hapuspaket(idPaket)
+    paket.delete(idPaket)
 
     print()
     print("=====Paket berhasil dihapus=====")
