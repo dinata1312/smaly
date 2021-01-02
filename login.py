@@ -2,9 +2,6 @@ import pymysql
 import os
 from getpass import getpass
 
-class Transaksi:
-    def __init__(self):
-
 
 class Login:
     def __init__(self):
