@@ -32,9 +32,16 @@ def cekstatus():
     print()
     print("Masukkan id pesanan untuk melihat status pakaian, untuk kembali ke menu ketik 0")
     print()
+    cekStatus = ct.cekStatus()
+    dataTransaksi = list(cekStatus.viewIDTransaksi() )
     answer = input("Jawaban = ")
 
     if answer == 0:
+        main()
+
+    elif answer not in dataTransaksi :
+        print("ID tidak ditemukan")
+        input("tekan ENTER untuk keluar")
         main()
 
     else:
@@ -167,10 +174,11 @@ def tambahTransaksi():
                 idPaket.append(i[0])
                 hitung+=1
             print("99. Selanjutnya")
+            print("0. Kembali")
 
             JenisCucian = int(input('Masukkan jenis cucian = ') )
             
-            if JenisCucian not in idPaket and JenisCucian != 99:
+            if JenisCucian not in idPaket and JenisCucian !=0 and JenisCucian !=99:
 
                 print("Input salah ! masukkan input dengan benar !")
                 input("\nTekan ENTER untuk melanjutkan")
@@ -183,6 +191,9 @@ def tambahTransaksi():
                 transaksi.addDetail(JenisCucian, berat, count)
                 count = count + 1
 
+            elif JenisCucian == 0:
+                menu()
+
             else:
 
                 namaPelanggan = input("Masukkan nama pelanggan = ")
@@ -193,8 +204,8 @@ def tambahTransaksi():
 
     print()
     print("==========Transaksi selesai==========")
-    print("\ntekan ENTER untuk melanjutkan")
-    menu()
+    print("\ntekan ENTER untuk lihat transaksi")
+    lihatTransaksi()
 
 def lihatTransaksi():
 
@@ -308,7 +319,7 @@ def tambahpaket():
     harga = int(input('Masukkan harga = '))
     jenis = input('Masukkan jenis = ')
     durasi = int(input('Masukkan durasi pengerjaan = '))
-    paket.add(namaPaket, harga, jenis, durasi)
+    paket.insert(namaPaket, harga, jenis, durasi)
         
     print()
     print("==========Paket berhasil ditambahkan==========")

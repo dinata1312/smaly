@@ -70,7 +70,6 @@ class Transaksi(Login):
                                     "detail"          : [[ ] ],
                                     "namaPelanggan"   : '',
                                     "status"          : 'belum selesai',
-                                    "idPotongan"      : '',
                                     "mulai"           : datetime.today().strftime('%Y-%m-%d')
                                   }
     
@@ -88,7 +87,7 @@ class Transaksi(Login):
     # Menambahkan Transaksi
     def insert(self, namaPelanggan):
         
-        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai'," + self.__addDataTransaksi['mulai'] + "')"
+        insertTransaksi = "INSERT INTO `transaksi` (`idTransaksi`, `namaPelanggan`, `status`, `Mulai`) VALUES (NULL, '" + namaPelanggan + "', 'belum selesai', '" + self.__addDataTransaksi['mulai'] + "')"
         
         #executing the quires
         self.cursor.execute(insertTransaksi)
@@ -221,16 +220,6 @@ class Transaksi(Login):
 
         return list(data)
 
-    # View Status
-    def viewStatus(self, answer):
-        
-        getData     = "SELECT * FROM transaksi WHERE `idTransaksi` = " + answer + ";"
-
-        self.cursor.execute(getData)
-        data = self.cursor.fetchall()
-        # print(data)
-        return list(data)
-
     # Detail Transaksi
     def detailTransaksi(self, idTransaksi):
 
@@ -290,3 +279,29 @@ class paket(Transaksi):
         self.connection.commit()    
 
         return True
+
+class cekStatus:
+    def __init__(self):
+        #database connection
+        self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
+        self.cursor = self.connection.cursor()
+        self.__idTransaksi  = ''
+    
+    def viewIDTransaksi(self):
+        
+        getData     = "SELECT idTransaksi FROM transaksi"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        
+        return list(data)
+        
+    # View Status
+    def viewStatus(self, answer):
+        
+        getData     = "SELECT * FROM transaksi WHERE `idTransaksi` = " + answer + ";"
+
+        self.cursor.execute(getData)
+        data = self.cursor.fetchall()
+        # print(data)
+        return list(data)
