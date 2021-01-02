@@ -285,17 +285,7 @@ class cekStatus:
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
         self.cursor = self.connection.cursor()
-        self.__idTransaksi  = ''
     
-    def viewIDTransaksi(self):
-        
-        getData     = "SELECT idTransaksi FROM transaksi"
-
-        self.cursor.execute(getData)
-        data = self.cursor.fetchall()
-        
-        return list(data)
-        
     # View Status
     def viewStatus(self, answer):
         

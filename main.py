@@ -33,19 +33,13 @@ def cekstatus():
     print("Masukkan id pesanan untuk melihat status pakaian, untuk kembali ke menu ketik 0")
     print()
     cekStatus = ct.cekStatus()
-    dataTransaksi = list(cekStatus.viewIDTransaksi() )
     answer = input("Jawaban = ")
 
     if answer == 0:
         main()
 
-    elif answer not in dataTransaksi :
-        print("ID tidak ditemukan")
-        input("tekan ENTER untuk keluar")
-        main()
-
-    else:
-        status = transaksi.viewStatus(answer)
+    else :
+        status = cekStatus.viewStatus(answer)
         
         for i in status:
             print("||==============================================||")
@@ -79,7 +73,7 @@ def cekstatus():
             
         input("tekan ENTER untuk keluar")
         main()
-
+    
 def login():
     
     os.system('cls')
