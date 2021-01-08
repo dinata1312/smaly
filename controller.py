@@ -67,6 +67,7 @@ class Transaksi(Login):
         self.__idTransaksi   = ''
         self.__detail        = []
         self.__addDataTransaksi = { 
+                                    "detail"          : [[] ],
                                     "status"          : 'belum selesai',
                                     "mulai"           : datetime.today().strftime('%Y-%m-%d')
                                   }
@@ -290,14 +291,24 @@ class paket(Transaksi):
 
     # Insert Paket
     def insert(self, namaPaket, harga, jenis, durasi):
+
+        # verifyNamaPaket
+        getSimiliarName = "SELECT * from `paket` WHERE `namaPaket` like '%" + str(namaPaket) + "%';"
         
-        insertPaket = "INSERT INTO `paket` (`idPaket`, `namaPaket`, `harga`, `jenis`, `durasi`) VALUES (NULL, '" + str(namaPaket) + "', '" + str(harga) + "', '" + str(jenis) + "', '" + str(durasi) + "') ;"
+        self.cursor.execute(getSimiliarName)
+        data = self.cursor.fetchall()
 
-        # executing the quires
-        self.cursor.execute(insertPaket)
-        self.connection.commit()    
+        if len(data) > 0:
+            return False
 
-        return True
+        else:
+            insertPaket = "INSERT INTO `paket` (`idPaket`, `namaPaket`, `harga`, `jenis`, `durasi`) VALUES (NULL, '" + str(namaPaket) + "', '" + str(harga) + "', '" + str(jenis) + "', '" + str(durasi) + "') ;"
+
+            # executing the quires
+            self.cursor.execute(insertPaket)
+            self.connection.commit()    
+
+            return True
     
     def delete(self, idPaket):
         

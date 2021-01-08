@@ -12,7 +12,7 @@ def main():
     print("1. Pelanggan")
     print("2. Pegawai")
     print("99. keluar\n")
-    
+
     answer = int(input("Isikan jawaban anda ="))
     if answer == 1 : 
         cekstatus()
@@ -41,36 +41,40 @@ def cekstatus():
     else :
         status = cekStatus.viewStatus(answer)
         
-        for i in status:
-            print("||==============================================||")
-            print("|| ID Transaksi\t\t= " + str(i[0]) + "\t\t\t||")
-            print("|| Nama Pelanggan\t= " + str(i[1]) + "\t\t\t||")
-            print("|| Status\t\t= " + str(i[2]) + "\t\t||")
-            print("|| Tanggal Pemesanan\t= " + str(i[3]) + "\t\t\t||" )
-            print("||----------------------------------------------||")
-
-            
-            idTransaksi = answer
-            detailnya = list(transaksi.detailTransaksi(idTransaksi))
-            total = 0
-
-            print("||==============================================||")
-            print("|| Paket\t|| Berat\t || Harga \t||")
-            print("||==============================================||")
-
-            for j in detailnya:
-                
-                namaPaket = transaksi.findPaket(j[2])
-                
-                print("|| " + str(namaPaket[0][1]) + "\t|| " + str(j[3]) + " kg\t\t || " + str(namaPaket[0][2]) + "\t||")
+        if status > 0:
+            for i in status:
+                print("||==============================================||")
+                print("|| ID Transaksi\t\t= " + str(i[0]) + "\t\t\t||")
+                print("|| Nama Pelanggan\t= " + str(i[1]) + "\t\t\t||")
+                print("|| Status\t\t= " + str(i[2]) + "\t\t||")
+                print("|| Tanggal Pemesanan\t= " + str(i[3]) + "\t\t||" )
                 print("||----------------------------------------------||")
-                total = total + namaPaket[0][2]
-            
-            print("||TOTAL HARGA \t\t\t   Rp" + str(total) + "\t||")
-            print("||==============================================||")
 
-            print()
-            
+                
+                idTransaksi = answer
+                detailnya = list(transaksi.detailTransaksi(idTransaksi))
+                total = 0
+
+                print("||==============================================||")
+                print("|| Paket\t|| Berat\t || Harga \t||")
+                print("||==============================================||")
+
+                for j in detailnya:
+                    
+                    namaPaket = transaksi.findPaket(j[2])
+                    
+                    print("|| " + str(namaPaket[0][1]) + "\t|| " + str(j[3]) + " kg\t\t || " + str(namaPaket[0][2]) + "\t||")
+                    print("||----------------------------------------------||")
+                    total = total + namaPaket[0][2]
+                
+                print("||TOTAL HARGA \t\t\t   Rp" + str(total) + "\t||")
+                print("||==============================================||")
+
+                print()
+                
+        else:
+            print("mohon maaf ID Pesanan tidak ditemukan !")
+
         input("tekan ENTER untuk keluar")
         main()
     
@@ -312,12 +316,20 @@ def tambahpaket():
     harga = int(input('Masukkan harga = '))
     jenis = input('Masukkan jenis = ')
     durasi = int(input('Masukkan durasi pengerjaan = '))
-    paket.insert(namaPaket, harga, jenis, durasi)
-        
+    
     print()
-    print("==========Paket berhasil ditambahkan==========")
-    print("\ntekan ENTER untuk melihat paket")
-    menupaket()
+    
+    # VALIDASI INPUT
+    if paket.insert(namaPaket, harga, jenis, durasi) == False:
+        print("==========Paket GAGAL ditambahkan==========")
+        print("Mohon periksa data yang diinputkan!")
+        print("**Nama paket yang didaftarkan tidak boleh sama dengan nama yang sudah pernah diinputkan !")
+        input("\ntekan ENTER untuk kembali ke menu paket")
+        menupaket()
+    else:
+        print("==========Paket berhasil ditambahkan==========")
+        input("\ntekan ENTER untuk melihat paket")
+        menupaket()
 
 def hapuspaket():
 
