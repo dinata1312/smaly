@@ -1,7 +1,13 @@
 import pymysql
 import os
+
 from getpass import getpass
-import controller as ct
+
+from login import Login
+from transaksi import Transaksi
+from paket import Paket
+from cekstatus import CekStatus
+from pendapatan import Pendapatan
 
 class main():
 
@@ -27,15 +33,14 @@ class main():
             input('tekan ENTER untuk melanjutkan...')
             main()
 
-
 def cekstatus():
 
     os.system('cls')
-    transaksi = ct.Transaksi()
+    transaksi = Transaksi()
     print()
     print("Masukkan id pesanan untuk melihat status pakaian, untuk kembali ke menu ketik 0")
     print()
-    cekStatus = ct.cekStatus()
+    cekStatus = CekStatus()
     answer = input("Jawaban = ")
 
     if answer == 0:
@@ -90,7 +95,7 @@ def login():
     # password = input('Masukkan password = ')
     password = getpass(prompt = 'Masukkan password = ', stream="*")
     
-    login = ct.Login(username, password)
+    login = Login(username, password)
 
     login.auth()
 
@@ -134,8 +139,8 @@ def tambahTransaksi():
 
     os.system('cls')
 
-    paket     = ct.paket()
-    transaksi = ct.Transaksi()
+    paket     = Paket()
+    transaksi = Transaksi
 
     loop = True
     count = 0
@@ -147,7 +152,7 @@ def tambahTransaksi():
             print("======================= S M A L Y =======================")
             print("TAMBAH TRANSAKSI")
             print()
-            paket = ct.paket()
+            paket = Paket()
 
             dataPaket = list(paket.viewPaket() )
 
@@ -211,7 +216,7 @@ def lihatTransaksi():
 
     os.system('cls')
 
-    transaksi = ct.Transaksi()
+    transaksi = Transaksi()
 
     dataTransaksi = list(transaksi.viewTransaksi() )
 
@@ -274,7 +279,7 @@ def menupaket():
     
     os.system('cls')
 
-    paket = ct.paket()
+    paket = Paket()
     dataPaket = list(paket.viewPaket() )
 
     print("||=======================================================||")
@@ -306,7 +311,7 @@ def menupaket():
 
 def tambahpaket():
 
-    paket = ct.paket()
+    paket = Paket()
 
     os.system('cls')
     print("""
@@ -338,7 +343,7 @@ def hapuspaket():
 
     os.system('cls')
 
-    paket = ct.paket()
+    paket = Paket()
     dataPaket = list(paket.viewPaket() )
 
     print("||=======================================================||")
@@ -360,8 +365,8 @@ def hapuspaket():
 
 def pendapatan():
     
-    pendapatan = ct.Pendapatan()
-    transaksi  = ct.Transaksi()
+    pendapatan = Pendapatan()
+    transaksi  = Transaksi()
 
     bulan      = int(input("Masukkan bulan (1-12) = ") )
     tahun      = int(input("Masukkan tahun = ") )
