@@ -3,28 +3,31 @@ import os
 from getpass import getpass
 import controller as ct
 
-def main():
+class main():
 
-    os.system('cls')
-    print("======================= S M A L Y =======================")
-    print("SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n")
-    print("Siapakah anda? \n")
-    print("1. Pelanggan")
-    print("2. Pegawai")
-    print("99. keluar\n")
+    def __init__(self):
 
-    answer = int(input("Isikan jawaban anda ="))
-    if answer == 1 : 
-        cekstatus()
-    elif answer == 2 :
-        login()
-    elif answer == 99 :
-        exit()
-    else:
-        print('Input yang dimasukkan salah! \ninput hanya boleh diisi angka 1 dan 2!')
-        input('tekan ENTER untuk melanjutkan...')
-        main()
-        
+        os.system('cls')
+        print("======================= S M A L Y =======================")
+        print("SELAMAT DATANG DI SISTEM MANAJEMEN LAUNDRY MILIK PAK EKO \n")
+        print("Siapakah anda? \n")
+        print("1. Pelanggan")
+        print("2. Pegawai")
+        print("99. keluar\n")
+
+        answer = int(input("Isikan jawaban anda ="))
+        if answer == 1 : 
+            cekstatus()
+        elif answer == 2 :
+            login()
+        elif answer == 99 :
+            exit()
+        else:
+            print('Input yang dimasukkan salah! \ninput hanya boleh diisi angka 1 dan 2!')
+            input('tekan ENTER untuk melanjutkan...')
+            main()
+
+
 def cekstatus():
 
     os.system('cls')
@@ -41,7 +44,7 @@ def cekstatus():
     else :
         status = cekStatus.viewStatus(answer)
         
-        if status > 0:
+        if len(status) > 0:
             for i in status:
                 print("||==============================================||")
                 print("|| ID Transaksi\t\t= " + str(i[0]) + "\t\t\t||")
