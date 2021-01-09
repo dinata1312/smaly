@@ -1,12 +1,12 @@
 import pymysql
 import os
 
-import main
+from main import Menu
 
 from getpass import getpass
 from datetime import datetime
 
-class Login():
+class Login(Menu):
     def __init__(self, username, password):
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
@@ -57,6 +57,6 @@ class Login():
             self.connection.commit()
             self.connection.close()
             os.system('cls')
-            main.menu()
+            Menu().menu()
             # os.system('python adminPage.py')
 
