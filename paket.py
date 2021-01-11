@@ -1,8 +1,6 @@
 import pymysql
 import os
 
-from main import Menu
-
 from getpass import getpass
 from datetime import datetime
 

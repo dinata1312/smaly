@@ -122,15 +122,15 @@ class Menu(Main):
                 TransaksiController.lihatTransaksi()
 
         elif pilihan == 3:
-            PaketController.menupaket()
+            self.menupaket()
 
         elif pilihan == 4:
-            PendapatanController.pendapatan()
+            self.pendapatan()
 
         elif pilihan == 5:
             print('Terima kasih')
             input('Tekan ENTER untuk keluar')
-            Main.main()
+            self.main()
         else:
             print('Input yang dimasukkan salah! \ninput hanya boleh diisi angka 1, 2, 3, 4, dan 5 !')
             input('tekan ENTER untuk melanjutkan...')

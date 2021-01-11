@@ -1,12 +1,12 @@
 import pymysql
 import os
 
-from main import Menu
+import transaksi as TransaksiController
 
 from getpass import getpass
 from datetime import datetime
 
-class Pendapatan():
+class Pendapatan(TransaksiController.Transaksi):
 
     def __init__(self):
         #database connection
