@@ -99,7 +99,7 @@ class Main:
             input("tekan ENTER untuk keluar")
             self.main()
 
-class Menu(Main):
+class Menu():
     def menu(self):
         
         os.system('cls')

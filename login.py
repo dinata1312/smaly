@@ -6,7 +6,7 @@ from main import Menu
 from getpass import getpass
 from datetime import datetime
 
-class Login(Menu):
+class Login():
     def __init__(self, username, password):
         #database connection
         self.connection = pymysql.connect(host="localhost", user="root", passwd="", database="smaly" )
