@@ -21,7 +21,7 @@ class Main:
         print("2. Pegawai")
         print("99. keluar\n")
 
-        answer = int(input("Isikan jawaban anda ="))
+        answer = int(input("Isikan jawaban anda = "))
         if answer == 1 : 
             self.cekstatus()
         elif answer == 2 :
@@ -66,7 +66,7 @@ class Main:
                 for i in status:
                     print("||==============================================||")
                     print("|| ID Transaksi\t\t= " + str(i[0]) + "\t\t\t||")
-                    print("|| Nama Pelanggan\t= " + str(i[1]) + "\t\t\t||")
+                    print("|| Nama Pelanggan\t= " + str(i[1]) + "\t\t||")
                     print("|| Status\t\t= " + str(i[2]) + "\t\t||")
                     print("|| Tanggal Pemesanan\t= " + str(i[3]) + "\t\t||" )
                     print("||----------------------------------------------||")
@@ -83,8 +83,9 @@ class Main:
                     for j in detailnya:
                         
                         namaPaket = transaksi.findPaket(j[2])
-                        
+
                         print("|| " + str(namaPaket[0][1]) + "\t|| " + str(j[3]) + " kg\t\t || " + str(namaPaket[0][2]) + "\t||")
+
                         print("||----------------------------------------------||")
                         total = total + namaPaket[0][2]
                     
@@ -130,11 +131,11 @@ class Menu():
         elif pilihan == 5:
             print('Terima kasih')
             input('Tekan ENTER untuk keluar')
-            self.main()
+            Main.main()
         else:
             print('Input yang dimasukkan salah! \ninput hanya boleh diisi angka 1, 2, 3, 4, dan 5 !')
             input('tekan ENTER untuk melanjutkan...')
-            self.menu()
+            Menu.menu()
 
     def tambahTransaksi(self):
 
@@ -179,6 +180,7 @@ class Menu():
                     # print("1." . banyakPaket[i][1])
                     idPaket.append(i[0])
                     hitung+=1
+                print("--------------------------")
                 print("99. Selanjutnya")
                 print("0. Kembali")
 
@@ -225,22 +227,27 @@ class Menu():
         print("|| ID\t|| Nama Pelanggan\t || Status\t  || Tanggal Pesan \t|| Total \t||")
         print("||======================================================================================||")
 
-        for i in dataTransaksi:
+        if len(dataTransaksi) < 1:
 
-            dataDetail = transaksi.detailTransaksi(i[0])
-            total = 0
+            print("||------------------------------------ Data kosong -------------------------------------||")
+        else:
 
-            for j in dataDetail:
-                
-                harga = transaksi.findPaket(j[2])
-                
-                total = total + harga[0][2]
+            for i in dataTransaksi:
 
-            if i[2] == 'selesai':
-                print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + "\t  || " + str(i[3]) + "\t\t|| Rp" + str(total) + "\t||")
-            else:
-                print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + " || " + str(i[3]) + "\t\t|| Rp"  + str(total) + "\t||")
-        
+                dataDetail = transaksi.detailTransaksi(i[0])
+                total = 0
+
+                for j in dataDetail:
+                    
+                    harga = transaksi.findPaket(j[2])
+                    
+                    total = total + harga[0][2]
+
+                if i[2] == 'selesai':
+                    print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + "\t  || " + str(i[3]) + "\t\t|| Rp" + str(total) + "\t||")
+                else:
+                    print("|| " + str(i[0]) + "\t|| " + str(i[1]) + "\t\t || " + str(i[2]) + " || " + str(i[3]) + "\t\t|| Rp"  + str(total) + "\t||")
+            
         print("||======================================================================================||")
         print()
         print("Masukkan id untuk melihat pesanan, untuk kembali ke menu ketik 0")
@@ -257,24 +264,28 @@ class Menu():
             idTransaksi = answer
             detailnya = list(transaksi.detailTransaksi(idTransaksi))
 
-            print("||===============================||")
+            print("||=====================================||")
             print("|| Paket\t|| Berat\t || Harga \t||")
-            print("||===============================||")
+            print("||=====================================||")
 
             for i in detailnya:
-                print("|| " + str(transaksi.findPaket(i[2]) ) + "\t|| " + str(i[3]) + " kg\t\t ||")
-                print("||------------------------------ ||")
-
+                
+                namaPaket = transaksi.findPaket(i[2])
+                print("|| " + str(namaPaket[0][1]) + "\t|| " + str(i[3]) + " kg\t\t || " + str(namaPaket[0][2]) + "\t||")
+                print("||----------------------------------------------||")
+                
             print()
             print("Opsi: ")
             print("1. Selesai\n2. Kembali ke menu")
             print()
             answer = int(input("Jawaban anda = ") )
-
-            transaksi.update(idTransaksi) 
-            print("Data berhasil diperbarui !")
-            input("Tekan ENTER untuk kembali ke menu")
-            self.menu()
+            if answer == 1:
+                transaksi.update(idTransaksi) 
+                print("Data berhasil diperbarui !")
+                input("Tekan ENTER untuk kembali ke lihat transaksi")
+            else:
+                input("Tekan ENTER untuk kembali ke lihat transaksi")
+            Menu().lihatTransaksi()
 
     def menupaket(self):
         
@@ -292,7 +303,7 @@ class Menu():
 
         print("||=======================================================||")
 
-        
+        print()
         print("Kamu mau apa?")
         print("1. Tambah paket")
         print("2. Hapus paket")
@@ -356,6 +367,7 @@ class Menu():
 
         print("||=======================================================||")
 
+        print()
         idPaket = input("Masukkan id data paket yang ingin anda hapus = ")
         paket.delete(idPaket)
 
@@ -378,24 +390,39 @@ class Menu():
             totalTransaksi  = 0
             totalPendapatan = 0
 
+            # JIKA ADA DATA TRANSAKSI 
+            if len(dataPendapatan) > 0:
 
-            for i in dataPendapatan:
-                
-                totalTransaksi = totalTransaksi + 1
-
-                
-                detailTransaksi = transaksi.detailTransaksi(i[0])
-
-                for j in detailTransaksi:
+                for i in dataPendapatan:
                     
-                    harga = transaksi.findPaket(j[2])
-                    totalPendapatan = totalPendapatan + harga[0][2]
+                    totalTransaksi = totalTransaksi + 1
+
+                    
+                    detailTransaksi = transaksi.detailTransaksi(i[0])
+
+                    for j in detailTransaksi:
+                        
+                        harga = transaksi.findPaket(j[2])
+                        totalPendapatan = totalPendapatan + harga[0][2]
             
+            # JIKA TIDAK ADA TRANSAKSI
+            else:
+
+                totalTransaksi = "belum ada"
+                totalPendapatan = 0
+
             print("||==============================================||")
             print("|| Tahun\t\t= " + str(tahun) + "\t\t\t||")
             print("|| Bulan\t\t= " + str(bulan) + "\t\t\t||")
-            print("|| Jumlah Transaksi\t= " + str(totalTransaksi) + "\t\t\t||")
-            print("|| Total pendapatan\t= Rp" + str(totalPendapatan) + "\t\t||" )
+
+            if totalPendapatan == "belum ada":
+                print("|| Jumlah Transaksi\t= " + str(totalTransaksi) + "\t\t||")
+            else:
+                print("|| Jumlah Transaksi\t= " + str(totalTransaksi) + "\t\t\t||")
+            if totalPendapatan > 999:
+                print("|| Total pendapatan\t= Rp" + str(totalPendapatan) + "\t\t||" )
+            else:
+                print("|| Total pendapatan\t= Rp" + str(totalPendapatan) + "\t\t\t||" )
             print("||----------------------------------------------||")
             
         else:

@@ -1,4 +1,4 @@
--import pymysql
+import pymysql
 import os
 
 from main import Menu

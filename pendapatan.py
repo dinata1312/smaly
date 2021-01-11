@@ -14,8 +14,10 @@ class Pendapatan(TransaksiController.Transaksi):
         self.cursor = self.connection.cursor()
     
     def byBulan(self, bulan, tahun):
-
-        query = "SELECT * FROM transaksi WHERE `Mulai` LIKE '" + str(tahun) + "-" + str(bulan) + "%' ;"
+        if bulan < 10:
+            query = "SELECT * FROM transaksi WHERE `Mulai` LIKE '" + str(tahun) + "-0" + str(bulan) + "%' ;"
+        else:
+            query = "SELECT * FROM transaksi WHERE `Mulai` LIKE '" + str(tahun) + "-" + str(bulan) + "%' ;"
         # print(query)
         # exit()
         self.cursor.execute(query)
