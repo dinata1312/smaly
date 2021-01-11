@@ -117,9 +117,9 @@ class Menu():
         if pilihan == 1 or pilihan == 2:
             
             if pilihan == 1:
-                TransaksiController.tambahTransaksi()
+                self.tambahTransaksi()
             else:
-                TransaksiController.lihatTransaksi()
+                self.lihatTransaksi()
 
         elif pilihan == 3:
             self.menupaket()
@@ -211,7 +211,7 @@ class Menu():
         print()
         print("==========Transaksi selesai==========")
         input("\ntekan ENTER untuk lihat transaksi")
-        TransaksiController.lihatTransaksi()
+        self.lihatTransaksi()
 
     def lihatTransaksi(self):
 
@@ -300,9 +300,9 @@ class Menu():
         answer = input("Jawaban = ")
 
         if answer == "1":
-            PaketController.tambahpaket()
+            self.tambahpaket()
         elif answer == "2":
-            PaketController.hapuspaket()
+            self.hapuspaket()
         elif answer == "3":
             self.menu()
         else:
@@ -334,11 +334,11 @@ class Menu():
             print("Mohon periksa data yang diinputkan!")
             print("**Nama paket yang didaftarkan tidak boleh sama dengan nama yang sudah pernah diinputkan !")
             input("\ntekan ENTER untuk kembali ke menu paket")
-            PaketController.menupaket()
+            self.menupaket()
         else:
             print("==========Paket berhasil ditambahkan==========")
             input("\ntekan ENTER untuk melihat paket")
-            PaketController.menupaket()
+            self.menupaket()
 
     def hapuspaket(self):
 
@@ -362,7 +362,7 @@ class Menu():
         print()
         print("=====Paket berhasil dihapus=====")
         print("\ntekan ENTER untuk melihat paket")
-        PaketController.menupaket()
+        self.menupaket()
 
     def pendapatan(self):
         
